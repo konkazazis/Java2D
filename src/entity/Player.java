@@ -51,18 +51,29 @@ public class Player extends Entity{
     }
 
     public void getPlayerImage() {
-        up1 = setup("/player/boy_up_1");
-        up2 = setup("/player/boy_up_2");
-        down1 = setup("/player/boy_down_1");
-        down2 = setup("/player/boy_down_2");
-        left1 = setup("/player/boy_left_1");
-        left2 = setup("/player/boy_left_2");
-        right1 = setup("/player/boy_right_1");
-        right2 = setup("/player/boy_right_2");
+        up1 = setup("/player/boy_up_1", gp.tileSize, gp.tileSize);
+        up2 = setup("/player/boy_up_2", gp.tileSize, gp.tileSize);
+        down1 = setup("/player/boy_down_1", gp.tileSize, gp.tileSize);
+        down2 = setup("/player/boy_down_2", gp.tileSize, gp.tileSize);
+        left1 = setup("/player/boy_left_1", gp.tileSize, gp.tileSize);
+        left2 = setup("/player/boy_left_2", gp.tileSize, gp.tileSize);
+        right1 = setup("/player/boy_right_1", gp.tileSize, gp.tileSize);
+        right2 = setup("/player/boy_right_2", gp.tileSize, gp.tileSize);
+    }
+
+    public void getPlayerAttackImage() {
+        attackUp1 = setup("/player/boy_up_1", gp.tileSize, gp.tileSize*2);
+        attackUp2 = setup("/player/boy_up_2", gp.tileSize, gp.tileSize*2);
+        attackDown1 = setup("/player/boy_down_1", gp.tileSize, gp.tileSize*2);
+        attackDown2 = setup("/player/boy_down_2", gp.tileSize, gp.tileSize*2);
+        attackLeft1 = setup("/player/boy_left_1", gp.tileSize*2, gp.tileSize);
+        attackLeft2 = setup("/player/boy_left_2", gp.tileSize*2, gp.tileSize);
+        attackRight1 = setup("/player/boy_right_1", gp.tileSize*2, gp.tileSize);
+        attackRight2 = setup("/player/boy_right_2", gp.tileSize*2, gp.tileSize);
     }
 
     public void update() {
-        if(keyH.upPressed == true || keyH.downPressed == true || keyH.leftPressed == true || keyH.rightPressed == true) {
+        if(keyH.upPressed == true || keyH.downPressed == true || keyH.leftPressed == true || keyH.rightPressed == true || keyH.enterPressed == true) {
 
             if (keyH.upPressed == true) {
                 direction = "up";
@@ -93,9 +104,7 @@ public class Player extends Entity{
             //check event
             gp.eHandler.checkEvent();
 
-            gp.keyH.enterPressed = false;
-
-            if (collisionOn == false) {
+            if (collisionOn == false && keyH.enterPressed == false) {
                 switch (direction) {
                     case "up":
                         worldY -= speed;
@@ -111,6 +120,8 @@ public class Player extends Entity{
                         break;
                 }
             }
+
+            gp.keyH.enterPressed = false;
 
             spriteCounter++;
             if (spriteCounter > 12) {
@@ -209,14 +220,14 @@ public class Player extends Entity{
         }
 
         if(invincible == true){
-            g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.3F));
+            //g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.3F));
 
         }
 
         g2.drawImage(image, screenX, screenY,null);
 
         //reset alpha
-        g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1F));
+        //g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1F));
 
         //      DEBUG
         g2.setFont(new Font("Arial", Font.PLAIN, 20));
