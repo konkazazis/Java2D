@@ -20,10 +20,12 @@ public class Entity {
     public int spriteCounter = 0;
     public int spriteNum = 1;
     public Rectangle solidArea = new Rectangle(0,0,48,48);
+    public Rectangle attackArea = new Rectangle(0,0,0, 0);
     public int solidAreaDefaultX, solidAreaDefaultY;
     public boolean collisionOn = false;
     public int actionLockCounter = 0;
     public boolean invincible = false;
+    boolean attacking = false;
     public int invincibleCounter = 0;
     String[] dialogues = new String[20];
     int dialogueIndex = 0;
@@ -113,6 +115,14 @@ public class Entity {
             spriteCounter = 0;
         }
 
+        if (invincible) {
+            invincibleCounter ++;
+            if(invincibleCounter > 40) {
+                invincible = false;
+                invincibleCounter = 0;
+            }
+        }
+
     }
 
     public void draw(Graphics2D g2) {
@@ -163,7 +173,14 @@ public class Entity {
 
             }
 
+            if(invincible == true){
+                //g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.4F));
+            }
+
             g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
+
+            //reset alpha
+            //g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1F));
 
         }
     }
