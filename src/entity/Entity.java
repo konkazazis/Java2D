@@ -26,7 +26,12 @@ public class Entity {
     public int actionLockCounter = 0;
     public boolean invincible = false;
     boolean attacking = false;
+    public boolean alive = true;
+    public boolean dying = false;
+
     public int invincibleCounter = 0;
+    int dyingCounter = 0;
+
     String[] dialogues = new String[20];
     int dialogueIndex = 0;
     public BufferedImage image, image2, image3;
@@ -174,15 +179,42 @@ public class Entity {
             }
 
             if(invincible == true){
-                //g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.4F));
+                g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.4F));
+            }
+
+            if(dying == true) {
+                dyingAnimation(g2);
             }
 
             g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
 
             //reset alpha
-            //g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1F));
+            g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1F));
 
         }
+    }
+
+    public void dyingAnimation(Graphics2D g2) {
+        dyingCounter ++;
+
+        int i = 5;
+
+        if (dyingCounter <= i) {changeAlpha(g2, 0F);}
+        if (dyingCounter > i && dyingCounter <= i*2) {changeAlpha(g2, 1F);}
+        if (dyingCounter > i*2 && dyingCounter <= i*3) {changeAlpha(g2, 0F);}
+        if (dyingCounter > i*3 && dyingCounter <= i*4) {changeAlpha(g2, 1F);}
+        if (dyingCounter > i*4 && dyingCounter <= i*5) {changeAlpha(g2, 0F);}
+        if (dyingCounter > i*5 && dyingCounter <= i*6) {changeAlpha(g2, 1F);}
+        if (dyingCounter > i*6 && dyingCounter <= i*7) {changeAlpha(g2, 0F);}
+        if (dyingCounter > i*7 && dyingCounter <= i*8) {changeAlpha(g2, 1F);}
+        if(dyingCounter > i*8) {
+            dying = false;
+            alive = false;
+        }
+    }
+
+    public void changeAlpha(Graphics2D g2, float alphaValue) {
+        g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alphaValue));
     }
 
     public BufferedImage setup (String imagePath, int width, int height) {

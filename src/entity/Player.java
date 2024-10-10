@@ -231,14 +231,14 @@ public class Player extends Entity{
                 gp.monster[i].invincible = true;
 
                 if(gp.monster[i].life <= 0) {
-                    gp.monster[i] = null;
+                    gp.monster[i].dying = true;
                 }
             }
 
         }
     }
 
-    public void draw(Graphics g2) {
+    public void draw(Graphics2D g2) {
 //        g2.setColor(Color.white);
 //        g2.fillRect( x, y, gp.tileSize, gp.tileSize);
 
@@ -325,14 +325,14 @@ public class Player extends Entity{
         }
 
         if(invincible == true){
-            //g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.4F));
+            g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.4F));
 
         }
 
         g2.drawImage(image, tempScreenX, tempScreenY,null);
 
         //reset alpha
-        //g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1F));
+        g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1F));
 
         //      DEBUG
         g2.setFont(new Font("Arial", Font.PLAIN, 20));
