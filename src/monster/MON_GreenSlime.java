@@ -3,7 +3,6 @@ package monster;
 import entity.Entity;
 import main.GamePanel;
 
-import java.awt.*;
 import java.util.Random;
 
 public class MON_GreenSlime extends Entity {
@@ -66,5 +65,11 @@ public class MON_GreenSlime extends Entity {
 
             actionLockCounter = 0;
         }
+    }
+
+    public void damageReaction() {
+
+        actionLockCounter = 0;
+        direction = gp.player.direction;
     }
 }

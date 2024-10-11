@@ -28,9 +28,12 @@ public class Entity {
     boolean attacking = false;
     public boolean alive = true;
     public boolean dying = false;
+    boolean hpBarOn = false;
+
 
     public int invincibleCounter = 0;
     int dyingCounter = 0;
+    int hpBarCounter = 0;
 
     String[] dialogues = new String[20];
     int dialogueIndex = 0;
@@ -48,6 +51,10 @@ public class Entity {
     }
 
     public void setAction(){
+
+    }
+
+    public void damageReaction() {
 
     }
 
@@ -87,6 +94,7 @@ public class Entity {
 
         if(this.type == 2 && contactPlayer == true){
             if (gp.player.invincible == false) {
+                gp.playSE(6);
                 gp.player.life -= 1;
                 gp.player.invincible = true;
             }
@@ -178,8 +186,29 @@ public class Entity {
 
             }
 
+            //moster health bar
+            if (type == 2 && hpBarOn == true) {
+                double oneScale = (double)gp.tileSize/maxLife;
+                double hpBarValue = oneScale * life;
+
+                g2.setColor(new Color(35,35,35));
+                g2.fillRect(screenX - 1, screenY - 16, gp.tileSize + 2, 12);
+
+                g2.setColor(new Color(255, 0,30));
+                g2.fillRect(screenX, screenY - 15, (int)hpBarValue, 10);
+
+                hpBarCounter ++;
+
+                if (hpBarCounter > 600) {
+                    hpBarCounter = 0;
+                    hpBarOn = false;
+                }
+            }
+
             if(invincible == true){
-                g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.4F));
+                hpBarOn = true;
+                hpBarCounter = 0;
+                changeAlpha(g2, 0.4F);
             }
 
             if(dying == true) {
@@ -189,7 +218,7 @@ public class Entity {
             g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
 
             //reset alpha
-            g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1F));
+            changeAlpha(g2, 1F);
 
         }
     }
