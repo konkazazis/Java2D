@@ -42,7 +42,7 @@ public class Entity {
     public boolean collision = false;
     public int type;
 
-    //character status
+    //character attributes
     public int maxLife;
     public int life;
     public int level;
@@ -59,6 +59,7 @@ public class Entity {
     //item attributes
     public int attackValue;
     public int defenseValue;
+    public String description = "";
 
 
     public Entity(GamePanel gp) {
