@@ -2,6 +2,7 @@ package entity;
 
 import main.GamePanel;
 import main.KeyHandler;
+import object.OBJ_Fireball;
 import object.OBJ_Key;
 import object.OBJ_Shield_Wood;
 import object.OBJ_Sword_Normal;
@@ -61,6 +62,7 @@ public class Player extends Entity{
         coin = 0;
         currentWeapon = new OBJ_Sword_Normal(gp);
         currentShield = new OBJ_Shield_Wood(gp);
+        projectile = new OBJ_Fireball(gp);
         attack = getAttack();
         defense = getDefense();
     }
@@ -195,12 +197,24 @@ public class Player extends Entity{
             }
         }
 
-        if (invincible) {
+        if(gp.keyH.shotKeyPressed == true && projectile.alive == false && shotAvailableCounter == 30){
+            projectile.set(worldX, worldY, direction, true, this);
+
+            gp.projectileList.add(projectile);
+            shotAvailableCounter = 0;
+            gp.playSE(10);
+        }
+
+        if (invincible == true) {
             invincibleCounter ++;
             if(invincibleCounter > 60) {
                 invincible = false;
                 invincibleCounter = 0;
             }
+        }
+
+        if(shotAvailableCounter < 30) {
+            shotAvailableCounter++;
         }
 
     }
@@ -229,7 +243,7 @@ public class Player extends Entity{
             solidArea.height = attackArea.height;
 
             int monsterIndex = gp.cCheck.checkEntity(this, gp.monster);
-            damageMonster(monsterIndex);
+            damageMonster(monsterIndex, attack);
 
             worldX = currentWorldX;
             worldY = currentWorldY;
@@ -274,7 +288,7 @@ public class Player extends Entity{
 
     public void contactMonster(int i) {
         if (i != 999) {
-            if(invincible == false){
+            if(invincible == false && gp.monster[i].dying == false){
                 gp.playSE(6);
 
                 int damage = gp.monster[i].attack - defense;
@@ -288,7 +302,7 @@ public class Player extends Entity{
         }
     }
 
-    public void damageMonster(int i) {
+    public void damageMonster(int i, int attack) {
         if (i != 999) {
 
             if (gp.monster[i].invincible == false) {

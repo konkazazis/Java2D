@@ -34,6 +34,7 @@ public class Entity {
     public int invincibleCounter = 0;
     int dyingCounter = 0;
     int hpBarCounter = 0;
+    public int shotAvailableCounter = 0;
 
     String[] dialogues = new String[20];
     int dialogueIndex = 0;
@@ -54,6 +55,8 @@ public class Entity {
     //character attributes
     public int maxLife;
     public int life;
+    public int maxMana;
+    public int mana;
     public int level;
     public int strength;
     public int dexterity;
@@ -64,11 +67,13 @@ public class Entity {
     public int coin;
     public Entity currentWeapon;
     public Entity currentShield;
+    public Projectile projectile;
 
     //item attributes
     public int attackValue;
     public int defenseValue;
     public String description = "";
+    public int useCost;
 
 
     public Entity(GamePanel gp) {
@@ -270,7 +275,6 @@ public class Entity {
         if (dyingCounter > i*6 && dyingCounter <= i*7) {changeAlpha(g2, 0F);}
         if (dyingCounter > i*7 && dyingCounter <= i*8) {changeAlpha(g2, 1F);}
         if(dyingCounter > i*8) {
-            dying = false;
             alive = false;
         }
     }
