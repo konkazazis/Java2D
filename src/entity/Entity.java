@@ -140,6 +140,7 @@ public class Entity {
         gp.cCheck.checkObject(this, false);
         gp.cCheck.checkEntity(this, gp.npc);
         gp.cCheck.checkEntity(this, gp.monster);
+        gp.cCheck.checkEntity(this, gp.iTile);
         boolean contactPlayer = gp.cCheck.checkPlayer(this);
 
         if(this.type == type_monster && contactPlayer == true){
