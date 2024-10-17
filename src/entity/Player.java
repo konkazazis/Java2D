@@ -154,6 +154,7 @@ public class Player extends Entity{
 
             //check interactive tile collision
             int iTileIndex = gp.cCheck.checkEntity(this, gp.iTile);
+            damageInteractiveTile(iTileIndex);
 
             //check event
             gp.eHandler.checkEvent();
