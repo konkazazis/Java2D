@@ -54,5 +54,10 @@ public class IT_DryTree extends InteractiveTile{
     	int speed = 1;
     	return speed;
     }
+    
+    public int getParticleMaxLife() {
+    	int maxLife = 20;
+    	return maxLife;
+    }
 
 }
