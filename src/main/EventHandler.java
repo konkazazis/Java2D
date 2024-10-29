@@ -73,8 +73,8 @@ public class EventHandler {
         if(map == gp.currentMap) {
 	        gp.player.solidArea.x = gp.player.worldX + gp.player.solidArea.x;
 	        gp.player.solidArea.y = gp.player.worldY + gp.player.solidArea.y;
-	        eventRect[col][row].x = col*gp.tileSize + eventRect[col][row].x;
-	        eventRect[col][row].y = row*gp.tileSize + eventRect[col][row].y;
+	        eventRect[map][col][row].x = col*gp.tileSize + eventRect[map][col][row].x;
+	        eventRect[map][col][row].y = row*gp.tileSize + eventRect[map][col][row].y;
 	
 	        if (gp.player.solidArea.intersects(eventRect[map][col][row]) && eventRect[map][col][row].eventDone == false) {
 	            if (gp.player.direction.contentEquals(reqDirection) || reqDirection.contentEquals("any")) {
