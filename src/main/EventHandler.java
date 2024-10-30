@@ -7,6 +7,7 @@ public class EventHandler {
 
     int previousEventX, previousEventY;
     boolean canTouchEvent = true;
+    int tempMap, tempCol, tempRow;
 
     public EventHandler(GamePanel gp) {
         this.gp = gp;
@@ -124,6 +125,7 @@ public class EventHandler {
     }
     
     public void teleport(int map, int col, int row) {
+    	gp.gameState = gp.transitionState;
     	gp.currentMap = map;
     	gp.player.worldX = gp.tileSize * col;
     	gp.player.worldY = gp.tileSize * row;
