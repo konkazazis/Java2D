@@ -28,6 +28,7 @@ public class UI {
     public int slotRow = 0;
     int subState = 0;
     int counter = 0;
+    public Entity npc;
 
     public UI(GamePanel gp) {
         this.gp = gp;
