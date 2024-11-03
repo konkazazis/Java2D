@@ -84,7 +84,7 @@ public class PathFinder {
 				node[col][row].solid = true;
 			}
 			//check interactive tiles
-			for(int i = 0; i < gp.iTile[i].length; i++) {
+			for(int i = 0; i < gp.iTile[1].length; i++) {
 				if(gp.iTile[gp.currentMap][i] != null && gp.iTile[gp.currentMap][i].destructible == true) {
 					int itCol = gp.iTile[gp.currentMap][i].worldX/gp.tileSize;
 					int itRow = gp.iTile[gp.currentMap][i].worldY/gp.tileSize;
@@ -138,11 +138,11 @@ public class PathFinder {
 				openNode(node[col-1][row]);
 			}
 			//open the down node
-			if(row + 1 < gp.maxWorldRow) {
+			if(row + 1 <= gp.maxWorldRow) {
 				openNode(node[col][row+1]);
 			}
 			//open the right node
-			if(col + 1 < gp.maxWorldCol) {
+			if(col + 1 <= gp.maxWorldCol) {
 				openNode(node[col+1][row]);
 			}
 			

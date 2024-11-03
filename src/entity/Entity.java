@@ -403,7 +403,39 @@ public class Entity {
     		}
     		else if(enTopY > nextY && enLeftX > nextX) {
     			direction = "up";
+    			checkCollision();
+    			if(collisionOn == true) {
+    				direction = "left";
+    			}
     		}
+    		else if (enTopY > nextY && enLeftX < nextX) {
+    			direction = "up";
+    			checkCollision();
+    			if(collisionOn == true) {
+    				direction = "right";
+    			}
+    		}
+    		else if(enTopY < nextY && enLeftX > nextX) {
+    			direction = "down";
+    			checkCollision();
+    			if(collisionOn == true) {
+    				direction = "left";
+    			}
+    		}
+    		else if(enTopY < nextY && enLeftX < nextX) {
+    			direction = "down";
+    			checkCollision();
+    			if(collisionOn == true) {
+    				direction = "right";
+    			}
+    		}
+    		
+//    		int nextCol = gp.pFinder.pathList.get(0).col;
+//    		int nextRow = gp.pFinder.pathList.get(0).row;
+//    		if(nextCol == goalCol && nextRow == goalRow) {
+//    			onPath = false;
+//    		}
+    		
     	}
     }
 }
