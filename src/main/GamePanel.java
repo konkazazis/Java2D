@@ -12,6 +12,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import javax.swing.JPanel;
 
+import ai.PathFinder;
+
 public class GamePanel extends JPanel implements Runnable{
     //SCREEN SETTINGS
     final int originalTileSize = 16;
@@ -37,7 +39,7 @@ public class GamePanel extends JPanel implements Runnable{
 
     int FPS = 60;
 
-    TileManager tileM = new TileManager(this);
+    public TileManager tileM = new TileManager(this);
     public KeyHandler keyH = new KeyHandler(this);
     Sound music = new Sound();
     Sound se = new Sound();
@@ -46,6 +48,7 @@ public class GamePanel extends JPanel implements Runnable{
     public UI ui = new UI(this);
     public EventHandler eHandler = new EventHandler(this);
     Config config = new Config(this);
+    public PathFinder pFinder = new PathFinder(this);
     Thread gameThread;
 
     public Player player = new Player(this,keyH);

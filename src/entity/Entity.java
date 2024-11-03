@@ -30,6 +30,7 @@ public class Entity {
     public boolean alive = true;
     public boolean dying = false;
     boolean hpBarOn = false;
+    public boolean onPath = false;
 
 
     public int invincibleCounter = 0;
@@ -174,11 +175,8 @@ public class Entity {
 
     }
 
-
-    public void update() {
-        setAction();
-
-        collisionOn = false;
+    public void checkCollision() {
+    	collisionOn = false;
         gp.cCheck.checkTile(this);
         gp.cCheck.checkObject(this, false);
         gp.cCheck.checkEntity(this, gp.npc);
@@ -189,6 +187,12 @@ public class Entity {
         if(this.type == type_monster && contactPlayer == true){
             damagePlayer(attack);
         }
+    }
+
+    public void update() {
+    	
+        setAction();
+        checkCollision();
 
         if (collisionOn == false) {
             switch (direction) {
@@ -363,5 +367,43 @@ public class Entity {
             e.printStackTrace();
         }
         return image;
+    }
+    
+    public void searchPath(int goalCol, int goalRow) {
+    	int startCol = (worldX + solidArea.x)/gp.tileSize;
+    	int startRow = (worldY + solidArea.y)/gp.tileSize;
+    	
+    	gp.pFinder.setNodes(startCol, startRow, goalCol, goalRow, this);
+    	
+    	if(gp.pFinder.search() == true) {
+    		
+    		//next worldX & worldY
+    		int nextX = gp.pFinder.pathList.get(0).col * gp.tileSize;
+    		int nextY = gp.pFinder.pathList.get(0).row * gp.tileSize;
+    		
+    		//entity solidArea position
+    		int enLeftX = worldX + solidArea.x;
+    		int enRightX = worldX + solidArea.x + solidArea.width;
+    		int enTopY = worldY + solidArea.y;
+    		int enBottomY = worldY + solidArea.y + solidArea.height;
+    		
+    		if(enTopY > nextY && enLeftX >= nextX && enRightX < nextX + gp.tileSize) {
+    			direction = "up";
+    		}
+    		else if (enTopY < nextY && enLeftX >= nextX && enRightX < nextX + gp.tileSize) {
+    			direction = "down";
+    		}
+    		else if (enTopY >= nextY && enBottomY < nextY + gp.tileSize) {
+    			if(enLeftX > nextX) {
+    				direction = "left";
+    			}
+    			if (enLeftX < nextX) {
+    				direction = "right";
+    			}
+    		}
+    		else if(enTopY > nextY && enLeftX > nextX) {
+    			direction = "up";
+    		}
+    	}
     }
 }
