@@ -847,6 +847,22 @@ public class UI {
     	drawInventory(gp.player, false);
     	//draw npc inventory
     	drawInventory(npc, true);
+    	
+    	//draw hint window 
+    	int x = gp.tileSize*2;
+    	int y = gp.tileSize*9;
+    	int width = gp.tileSize*6;
+    	int height = gp.tileSize*2;
+    	drawSubWindow(x,y,width,height);
+    	g2.drawString("[ESC] Back",x+24,y+60);
+    	
+    	//draw player coin window 
+    	x = gp.tileSize*12;
+    	y = gp.tileSize*9;
+    	width = gp.tileSize*6;
+    	height = gp.tileSize*2;
+    	drawSubWindow(x,y,width,height);
+    	g2.drawString("Your Coins: " + gp.player.coin,x+24,y+60);
     }
     
     public void trade_sell() {
