@@ -154,7 +154,7 @@ public class PathFinder {
 				
 				//check if this nodes f cost is better
 				if(openList.get(i).fCost < bestNodefCost) {
-					bestNodeIndex = 1;
+					bestNodeIndex = i;
 					bestNodefCost = openList.get(i).fCost;
 				}
 				//if f cost is equal, check the g cost
