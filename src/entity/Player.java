@@ -224,7 +224,14 @@ public class Player extends Entity{
 
             projectile.subtractResource(this);
 
-            gp.projectileList.add(projectile);
+            for(int i = 0; i < gp.projectile[1].length; i++) {
+            	if(gp.projectile[gp.currentMap][i] == null) {
+            		gp.projectile[gp.currentMap][i] = projectile;
+            		break;
+            	}
+            }
+            
+            
             shotAvailableCounter = 0;
             gp.playSE(10);
         }
@@ -285,6 +292,9 @@ public class Player extends Entity{
 
             int iTileIndex = gp.cCheck.checkEntity(this, gp.iTile);
             damageInteractiveTile(iTileIndex);
+            
+            int projectileIndex = gp.cCheck.checkEntity(this, gp.projectile);
+            damageProjectile(projectileIndex);
 
             worldX = currentWorldX;
             worldY = currentWorldY;
@@ -402,6 +412,15 @@ public class Player extends Entity{
             }
         }
     }
+    
+    public void damageProjectile(int i) {
+    	if(i != 999) {
+    		Entity projectile = gp.projectile[gp.currentMap][i];
+    		projectile.alive = false;
+    		generateParticle(projectile, projectile);
+    	}
+    } 
+
 
     public void checkLevelUp() {
         if (exp >= nextLevelExp) {
