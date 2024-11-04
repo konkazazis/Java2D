@@ -46,10 +46,11 @@ public class Player extends Entity{
     public void setDefaultValues() {
     	worldX = gp.tileSize * 23;
         worldY = gp.tileSize * 21;
-        worldX = gp.tileSize * 12;
-        worldY = gp.tileSize * 12;
-        gp.currentMap = 1;
-        speed = 4;
+        //worldX = gp.tileSize * 12;
+        //worldY = gp.tileSize * 12;
+        //gp.currentMap = 1;
+        defaultSpeed = 4;
+        speed = defaultSpeed;
         direction = "down";
 
         //player status
@@ -288,7 +289,7 @@ public class Player extends Entity{
             solidArea.height = attackArea.height;
 
             int monsterIndex = gp.cCheck.checkEntity(this, gp.monster);
-            damageMonster(monsterIndex, attack);
+            damageMonster(monsterIndex, attack, currentWeapon.knockBackPower);
 
             int iTileIndex = gp.cCheck.checkEntity(this, gp.iTile);
             damageInteractiveTile(iTileIndex);
@@ -365,13 +366,17 @@ public class Player extends Entity{
         }
     }
 
-    public void damageMonster(int i, int attack) {
+    public void damageMonster(int i, int attack, int knockBackPower) {
         if (i != 999) {
 
             if (gp.monster[gp.currentMap][i].invincible == false) {
 
                 gp.playSE(5);
-
+                
+                if(knockBackPower > 0) {
+                	knockBack(gp.monster[gp.currentMap][i], knockBackPower);
+                }
+                
                 int damage = attack - gp.monster[gp.currentMap][i].defense;
                 if(damage < 0) {
                     damage = 0;
@@ -395,6 +400,13 @@ public class Player extends Entity{
         }
     }
 
+    public void knockBack(Entity entity, int knockBackPower) {
+    	
+    	entity.direction = direction;
+    	entity.speed += knockBackPower;
+    	entity.knockBack = true;
+    }
+    
     public void damageInteractiveTile(int i) {
         if (i != 999 && gp.iTile[gp.currentMap][i].destructible == true
                 && gp.iTile[gp.currentMap][i].isCorrectItem(this)  == true
