@@ -18,11 +18,24 @@ public class OBJ_Key extends Entity {
         price = 100;
     }
     
-    public void use(Entity entity) {
+    public boolean use(Entity entity) {
     	
     	gp.gameState = gp.dialogueState;
     	
     	int objIndex = getDetected(entity, gp.obj, "Door");
+    	
+    	if(objIndex != 999) {
+    		gp.ui.currentDialogue = "You used the key " + name + " and open the door.";
+    		gp.playSE(3);
+    		gp.obj[gp.currentMap][objIndex] = null;
+    		return true;
+    	}
+    	else {
+    		gp.ui.currentDialogue = "What are you doing?";
+        	return false;
+    	}
+    	
+
     }
 
 }

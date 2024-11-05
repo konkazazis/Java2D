@@ -155,7 +155,9 @@ public class Entity {
     	
     }
 
-    public void use(Entity entity) {}
+    public boolean use(Entity entity) {
+    	return false;
+    }
 
     public void checkDrop() {
 
@@ -528,7 +530,7 @@ public class Entity {
     	int col = nextWorldX/gp.tileSize;
     	int row = nextWorldY/gp.tileSize;
     	
-    	for (int i = 0; i < target[i].length; i++) {
+    	for (int i = 0; i < target[1].length; i++) {
     		if(target[gp.currentMap][i] != null) {
     			if(target[gp.currentMap][i].getCol() == col 
     					&& target[gp.currentMap][i].getRow() == row 
