@@ -15,14 +15,14 @@ public class Lighting {
 
 	GamePanel gp;
 	BufferedImage darknessFilter;
-	int dayCounter;
-	float filterAlpha = 0f;
+	public int dayCounter;
+	public float filterAlpha = 0f;
 	
-	final int day = 0;
-	final int dusk = 1;
-	final int night = 2;
-	final int dawn = 3;
-	int dayState = day;
+	public final int day = 0;
+	public final int dusk = 1;
+	public final int night = 2;
+	public final int dawn = 3;
+	public int dayState = day;
 	
 	public Lighting(GamePanel gp) {
 		this.gp = gp;
@@ -108,7 +108,7 @@ public class Lighting {
 		}
 		if(dayState == night) {
 			dayCounter++;
-			if(dayCounter > 600) {
+			if(dayCounter > 3600) {
 				dayState = dawn;
 				dayCounter = 0;
 			}
