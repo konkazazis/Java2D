@@ -116,7 +116,7 @@ public class Lighting {
 		if(dayState == dawn) {
 			filterAlpha -= 0.001f;
 			
-			if(filterAlpha < 0) {
+			if(filterAlpha < 0f) {
 				filterAlpha = 0;
 				dayState = day;
 			}
@@ -127,6 +127,7 @@ public class Lighting {
 		
 		g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, filterAlpha));
 		g2.drawImage(darknessFilter, 0, 0, null);
+		g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
 		
 		String situation = "";
 		switch(dayState) {
