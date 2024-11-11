@@ -8,6 +8,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Entity {
     GamePanel gp;
@@ -17,6 +18,7 @@ public class Entity {
     public BufferedImage up1,up2,down1,down2,left1,left2,right1,right2;
     public BufferedImage attackUp1, attackUp2, attackDown1, attackDown2, attackLeft1, attackLeft2, attackRight1, attackRight2;
     public String direction = "down";
+    public Entity attacker;
 
     //state
     public int spriteCounter = 0;
@@ -33,6 +35,7 @@ public class Entity {
     boolean hpBarOn = false;
     public boolean onPath = false;
     public boolean knockBack = false;
+    public String knockBackDirection;
 
     //counters
     public int invincibleCounter = 0;
@@ -124,8 +127,98 @@ public class Entity {
     	return (worldY + solidArea.y)/gp.tileSize;
     }
 
+    public int getXdistance(Entity target) {
+    	int xDistance = Math.abs(worldX - target.worldX);
+    	
+    	return xDistance;
+    	
+    }
+    
+    public int getYdistance(Entity target) {
+    	int yDistance = Math.abs(worldY - target.worldY);
+    	
+    	return yDistance;
+    	
+    }
+    
+    public int getTileDistance(Entity target) {
+    	int tileDistance = (getXdistance(target) + getYdistance(target))/gp.tileSize;
+    	
+    	return tileDistance;
+    	
+    }
+    
+    public int getGoalCol(Entity target) {
+    	int goalCol = (target.worldX + target.solidArea.x)/gp.tileSize;
+    	return goalCol;
+    }
+    
+    public int getGoalRow(Entity target) {
+    	int goalRow = (target.worldY + target.solidArea.y)/gp.tileSize;
+    	return goalRow;
+    }
+    
     public void setAction(){
     	
+    }
+    
+    public void checkShootOrNot(int rate, int shotInterval) {
+    	int i = new Random().nextInt(rate);
+        if(i == 0 && projectile.alive == false && shotAvailableCounter == shotInterval) {
+            projectile.set(worldX, worldY, direction, true,this);
+            
+            //check vacancy
+            for( int ii = 0; ii < gp.projectile[1].length; ii++) {
+            	if(gp.projectile[gp.currentMap][ii] == null) {
+            		gp.projectile[gp.currentMap][ii] = projectile;
+            		break;
+            	}
+            }
+            
+            shotAvailableCounter = 0;
+        }
+    }
+    
+    public void checkStartChasingOrNot(Entity target, int distance, int rate) {
+    	if(getTileDistance(target) < distance) {
+    		int i = new Random().nextInt(rate);
+    		if(i == 0) {
+    			onPath = true;
+    		}
+    	}
+    }
+    
+    public void checkStopChasingOrNot(Entity target, int distance, int rate) {
+    	if(getTileDistance(target) > distance) {
+    		int i = new Random().nextInt(rate);
+    		if(i == 0) {
+    			onPath = false;
+    		}
+    	}
+    }
+    
+    public void getRandomDirection() {
+    	//Running on 60fps means he will not change direction
+        //for 2 seconds. (120/60=2)
+        if (actionLockCounter == 120) {
+            Random random = new Random();
+            int i = random.nextInt(100) + 1;
+
+            if (i <= 25) {
+                direction = "up";
+            }
+            if (i > 25 && i <= 50) {
+                direction = "down";
+            }
+            if (i > 50 && i <= 75) {
+                direction = "left";
+            }
+            if (i > 75 && i <= 100) {
+                direction = "right";
+            }
+
+            actionLockCounter = 0;
+        }
     }
 
     public void damageReaction() {
@@ -242,7 +335,7 @@ public class Entity {
     			speed = defaultSpeed;
     		}
     		else if (collisionOn == false) {
-    			switch(gp.player.direction) {
+    			switch(knockBackDirection) {
 	    			case "up":
 	                    worldY -= speed;
 	                    break;
@@ -326,6 +419,14 @@ public class Entity {
         }
     }
 
+    public void setKnockBack(Entity target, Entity attacker,  int knockBackPower) {
+
+    	this.attacker = attacker;
+    	target.knockBackDirection = attacker.direction;
+    	target.speed += knockBackPower;
+    	target.knockBack = true;
+    }
+    
     public void draw(Graphics2D g2) {
 
         BufferedImage image = null;
