@@ -95,6 +95,8 @@ public class Player extends Entity{
 
     public int getAttack() {
         attackArea = currentWeapon.attackArea;
+        motion1_duration = currentWeapon.motion1_duration;
+        motion2_duration = currentWeapon.motion2_duration;
         return attack = strength * currentWeapon.attackValue;
     }
 
@@ -275,52 +277,6 @@ public class Player extends Entity{
         	gp.playSE(12);
         }
 
-    }
-
-    public void attacking() {
-        spriteCounter ++;
-        if (spriteCounter <= 5) {
-            spriteNum = 1;
-        }
-        if (spriteCounter > 5 && spriteCounter <= 25) {
-            spriteNum = 2;
-
-            int currentWorldX = worldX;
-            int currentWorldY = worldY;
-            int solidAreaWidth = solidArea.width;
-            int solidAreaHeight = solidArea.height;
-
-            switch (direction) {
-                case "up": worldY -= attackArea.height; break;
-                case "down": worldY += attackArea.height; break;
-                case"left": worldX -= attackArea.width; break;
-                case "right": worldX += attackArea.width; break;
-            }
-
-            solidArea.width = attackArea.width;
-            solidArea.height = attackArea.height;
-
-            int monsterIndex = gp.cCheck.checkEntity(this, gp.monster);
-            damageMonster(monsterIndex, this, attack, currentWeapon.knockBackPower);
-
-            int iTileIndex = gp.cCheck.checkEntity(this, gp.iTile);
-            damageInteractiveTile(iTileIndex);
-            
-            int projectileIndex = gp.cCheck.checkEntity(this, gp.projectile);
-            damageProjectile(projectileIndex);
-
-            worldX = currentWorldX;
-            worldY = currentWorldY;
-            solidArea.width = solidAreaWidth;
-            solidArea.height = solidAreaHeight;
-
-
-        }
-        if (spriteCounter > 25 ){
-            spriteNum = 1;
-            spriteCounter = 0;
-            attacking = false;
-        }
     }
 
     public void pickUpObject(int i) {
