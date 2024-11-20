@@ -16,6 +16,7 @@ import java.util.Comparator;
 import javax.swing.JPanel;
 
 import ai.PathFinder;
+import data.SaveLoad;
 
 public class GamePanel extends JPanel implements Runnable{
     //SCREEN SETTINGS
@@ -54,6 +55,7 @@ public class GamePanel extends JPanel implements Runnable{
     public PathFinder pFinder = new PathFinder(this);
     EnvironmentManager eManager = new EnvironmentManager(this);
 	Map map = new Map(this);
+	SaveLoad saveLoad = new SaveLoad(this);
     Thread gameThread;
 
     public Player player = new Player(this,keyH);
