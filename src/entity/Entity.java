@@ -41,6 +41,8 @@ public class Entity {
     public boolean guarding = false;
     public boolean transparent = false;
     public boolean offBalance = false;
+	public Entity loot;
+	public boolean opened = false;
 
     //counters
     public int invincibleCounter = 0;
@@ -165,6 +167,10 @@ public class Entity {
     public int getGoalRow(Entity target) {
     	int goalRow = (target.worldY + target.solidArea.y)/gp.tileSize;
     	return goalRow;
+    }
+    
+    public void setLoot(Entity loot) {
+    	
     }
     
     public void setAction(){

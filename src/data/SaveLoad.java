@@ -1,10 +1,24 @@
 package data;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
+import entity.Entity;
 import main.GamePanel;
+import object.OBJ_Axe;
+import object.OBJ_Boots;
+import object.OBJ_Chest;
+import object.OBJ_Door;
+import object.OBJ_Key;
+import object.OBJ_Lantern;
+import object.OBJ_Potion_Red;
+import object.OBJ_Shield_Blue;
+import object.OBJ_Shield_Wood;
+import object.OBJ_Sword_Normal;
+import object.OBJ_Tent;
 
 public class SaveLoad {
 	
@@ -12,8 +26,27 @@ public class SaveLoad {
 	
 	public SaveLoad(GamePanel gp) {
 		this.gp = gp;
+	}
+	
+	public Entity getObject(String itemName) {
+		Entity obj = null;
 		
+		switch(itemName) {
+			case "Woodcutter's Axe": obj = new OBJ_Axe(gp); break;
+			case "Boots": obj = new OBJ_Boots(gp); break;
+			case "Key": obj = new OBJ_Key(gp); break;
+			case "Lantern": obj = new OBJ_Lantern(gp); break;
+			case "Red Potion": obj = new OBJ_Potion_Red(gp); break;
+			case "Blue Shield": obj = new OBJ_Shield_Blue(gp); break;
+			case "Wood Shield": obj = new OBJ_Shield_Wood(gp); break;
+			case "Normal Sword": obj = new OBJ_Sword_Normal(gp); break;
+			case "Tent": obj = new OBJ_Tent(gp); break;
+			case "Door": obj = new OBJ_Door(gp); break;
+			case "Chest": obj = new OBJ_Chest(gp); break;
+			
+		}
 		
+		return obj;
 	}
 	
 	public void save() {
@@ -32,6 +65,16 @@ public class SaveLoad {
 			ds.exp = gp.player.exp;
 			ds.nextLevelExp = gp.player.nextLevelExp;
 			ds.coin = gp.player.coin;
+			
+			//player inventory 
+			for(int i = 0 ; i < gp.player.inventory.size(); i++) {
+				ds.itemNames.add(gp.player.inventory.get(i).name);
+				ds.itemAmounts.add(gp.player.inventory.get(i).amount);
+			}
+			
+			//write the Data object
+			oos.writeObject(ds);
+			
 		}
 		catch (Exception e){
 			System.out.println("Save Exception");
@@ -39,6 +82,26 @@ public class SaveLoad {
 	}
 	
 	public void load() {
+		
+		try {
+			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(new File("save.dat")));
+			
+			DataStorage ds = (DataStorage)ois.readObject();
+			
+			gp.player.level = ds.level;
+			gp.player.maxLife = ds.maxLife;
+			gp.player.life = ds.life;
+			gp.player.maxMana = ds.maxMana;
+			gp.player.mana = ds.mana;
+			gp.player.strength = ds.strength;
+			gp.player.dexterity = ds.dexterity;
+			gp.player.exp = ds.exp;
+			gp.player.nextLevelExp = ds.nextLevelExp;
+			gp.player.coin = ds.coin;
+		}
+		catch(Exception e) {
+			System.out.println("Load Exception");
+		}
 		
 	}
 }
