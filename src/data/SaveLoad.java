@@ -38,7 +38,7 @@ public class SaveLoad {
 			case "Lantern": obj = new OBJ_Lantern(gp); break;
 			case "Red Potion": obj = new OBJ_Potion_Red(gp); break;
 			case "Blue Shield": obj = new OBJ_Shield_Blue(gp); break;
-			case "Wood Shield": obj = new OBJ_Shield_Wood(gp); break;
+			case "Wooden Shield": obj = new OBJ_Shield_Wood(gp); break;
 			case "Normal Sword": obj = new OBJ_Sword_Normal(gp); break;
 			case "Tent": obj = new OBJ_Tent(gp); break;
 			case "Door": obj = new OBJ_Door(gp); break;
@@ -157,7 +157,7 @@ public class SaveLoad {
 						}
 						gp.obj[mapNum][i].opened = ds.mapObjectOpened[mapNum][i];
 						if(gp.obj[mapNum][i].opened == true) {
-							gp.obj[mapNum][i].down1 = gp.obj[mapNum][i].image2;
+							//gp.obj[mapNum][i].down1 = gp.obj[mapNum][i].image2;
 						}
 					}
 				}
