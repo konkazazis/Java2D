@@ -82,8 +82,8 @@ public class NPC_OldMan  extends Entity{
     }
 
     public void speak() {
-        super.speak();
-        
+    	facePlayer();
+    	startDialogue(this, dialogueSet);
         onPath = true;
     }
 
