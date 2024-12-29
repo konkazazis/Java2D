@@ -930,7 +930,6 @@ public class UI {
     			if(npc.inventory.get(itemIndex).price > gp.player.coin) {
     				subState = 0;
     				npc.startDialogue(npc,2);
-    				drawDialogueScreen();
     			}
     			else {
     				if(gp.player.canObtainItem(npc.inventory.get(itemIndex)) == true) {

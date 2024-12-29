@@ -2,6 +2,7 @@ package entity;
 
 import main.GamePanel;
 
+import java.awt.Rectangle;
 import java.util.Random;
 
 public class NPC_OldMan  extends Entity{
@@ -10,6 +11,16 @@ public class NPC_OldMan  extends Entity{
         super(gp);
         direction = "down";
         speed = 1;
+        
+        solidArea = new Rectangle();
+        solidArea.x = 8;
+        solidArea.y = 16;
+        solidAreaDefaultX = solidArea.x;
+        solidAreaDefaultY = solidArea.y;
+        solidArea.width = 30;
+        solidArea.height = 30;
+        
+        dialogueSet = -1;
 
         getImage();
         setDialogue();
@@ -84,7 +95,14 @@ public class NPC_OldMan  extends Entity{
     public void speak() {
     	facePlayer();
     	startDialogue(this, dialogueSet);
-        onPath = true;
+    	
+    	dialogueSet ++;
+    	
+    	if(dialogues[dialogueSet][0] == null) {
+    		dialogueSet = 0;
+    	}
+    	
+        //onPath = true;
     }
 
 }
