@@ -508,8 +508,10 @@ public class Player extends Entity{
 
             gp.playSE(8);
             gp.gameState = gp.dialogueState;
-          
             
+            dialogues[0][0] = "You are level "+ level + " now!\n";
+            setDialogue();
+          
             startDialogue(this,0);
 
         }
