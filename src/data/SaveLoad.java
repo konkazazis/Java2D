@@ -131,7 +131,7 @@ public class SaveLoad {
 			//player inventory
 			gp.player.inventory.clear();
 			for(int i = 0; i < ds.itemNames.size(); i++) {
-				gp.player.inventory.add(getObject(ds.itemNames.get(i)));
+				gp.player.inventory.add(gp.eGenerator.getObject(ds.itemNames.get(i)));
 				gp.player.inventory.get(i).amount = ds.itemAmounts.get(i);
 			}
 			
@@ -149,11 +149,11 @@ public class SaveLoad {
 						gp.obj[mapNum][i] = null;
 					}
 					else {
-						gp.obj[mapNum][i] = getObject(ds.mapObjectNames[mapNum][i]);
+						gp.obj[mapNum][i] = gp.eGenerator.getObject(ds.mapObjectNames[mapNum][i]);
 						gp.obj[mapNum][i].worldX = ds.mapObjectWorldX[mapNum][i];
 						gp.obj[mapNum][i].worldY = ds.mapObjectWorldY[mapNum][i];
 						if(ds.mapObjectLootNames[mapNum][i] != null) {
-							gp.obj[mapNum][i].loot = getObject(ds.mapObjectLootNames[mapNum][i]);
+							gp.obj[mapNum][i].loot = gp.eGenerator.getObject(ds.mapObjectLootNames[mapNum][i]);
 						}
 						gp.obj[mapNum][i].opened = ds.mapObjectOpened[mapNum][i];
 						if(gp.obj[mapNum][i].opened == true) {
